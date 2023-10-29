@@ -20,7 +20,7 @@ Product.init(
         type: DataTypes.STRING,
         allowNull: false,
       } ,
-      product_price:{
+      price:{
         type: DataTypes.INTEGER,
         allowNull: false,
       } ,
