@@ -1,5 +1,5 @@
 const router = require('express').Router();
-const { Product, Category, ProductTag } = require('../../models');
+const { Product, Category, ProductTag, Tag } = require('../../models');
 
 // The `/api/products` endpoint
 
@@ -9,7 +9,7 @@ router.get('/', async (req, res) => {
   // find all products
   // be sure to include its associated Category and Tag data
   const allProducts = await Product.findAll({
-    include: [{ Category, ProductTag}],
+    include: [Category, {model: Tag, through: ProductTag}],
   });
   res.status(200).json(allProducts);
   ///catch errors
@@ -23,7 +23,7 @@ router.get('/:id', async (req, res) => {
   try {
   // find a single product by its `id`
   const oneProduct = await Product.findByPk(req.params.id,{
-    include: [Category, ProductTag]
+    include: [Category, {model: Tag, through: ProductTag}],
   });
   if (!oneProduct) {
   // be sure to include its associated Category and Tag data
