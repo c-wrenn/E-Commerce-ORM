@@ -1,7 +1,7 @@
 const router = require('express').Router();
 const { Tag, Product, ProductTag } = require('../../models');
 
-// The `/api/tags` endpoint
+// `/api/tags` 
 
 router.get('/', async (req, res) => {
   // find all tags
@@ -10,8 +10,7 @@ router.get('/', async (req, res) => {
     // finds all tags and include the product according to the tag id
     const tags = await Tag.findAll({
       include: [{
-        model:Product,
-        through: ProductTag
+        model:Product, through: ProductTag
       }]
   });
   res.status(200).json(tags);
@@ -49,7 +48,7 @@ router.post('/', async (req, res) => {
   // create a new tag by using post route
   try {
     const newCreatedTag = await Tag.create(req.body);
-    res.status(201).json(newCreatedTag);
+    res.status(200).json(newCreatedTag);
   } catch (err) {
     res.status(400).json(err);
   }
@@ -86,7 +85,7 @@ router.delete('/:id', async (req, res) => {
       res.status(404).json({ message: 'No Tag found with that id! ' });
       return;
     }
-    res.status(200).json({ message: 'Tag with matching id was deleted' });
+    res.status(200).json({ message: 'Tag deleted!' });
   } catch (err) {
     res.status(500).json(err);
   }
